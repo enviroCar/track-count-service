@@ -1,0 +1,17 @@
+
+
+kafka:
+  group:
+    id: track-count
+  client:
+    id: track-count
+  bootstrap:
+    servers: localhost:9092
+
+trackcount:
+  model:
+    bufferSize: 10
+  densify:
+    numPoints: 4
+  mapMatching:
+    url: https://processing.envirocar.org/mapmatching/
