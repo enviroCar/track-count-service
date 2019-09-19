@@ -1,6 +1,8 @@
 package org.envirocar.trackcount.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+//import java.time.Duration;
 import okhttp3.OkHttpClient;
 
 import org.envirocar.trackcount.mapmatching.MapMatchingService;
@@ -35,6 +37,7 @@ public class RetrofitConfiguration {
         return new OkHttpClient.Builder()
                        .followRedirects(true)
                        .followSslRedirects(true)
+//                       .callTimeout(Duration.ofMillis(30000))
                        .addInterceptor(new LoggingInterceptor())
                        .build();
     }

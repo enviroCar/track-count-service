@@ -1,16 +1,20 @@
 package org.envirocar.trackcount.mapmatching;
 
+import static java.util.stream.Collectors.toList;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
+
 import org.envirocar.trackcount.model.Feature;
 import org.envirocar.trackcount.model.FeatureCollection;
 import org.locationtech.jts.geom.Geometry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toList;
+import retrofit2.Call;
+import retrofit2.Response;
 
 @Service
 public class MapMatcherImpl implements MapMatcher {
@@ -24,8 +28,14 @@ public class MapMatcherImpl implements MapMatcher {
     @Override
     public FeatureCollection mapMatch(FeatureCollection featureCollection) throws MapMatchingException {
 
-        MapMatchingResult result = service.mapMatch(featureCollection);
-        List<Geometry> geometries = result.getMatchedPoints().stream()
+        Call<MapMatchingResult> result = service.mapMatch(featureCollection);
+        Response<MapMatchingResult> response = null;
+		try {
+			response = result.execute();
+		} catch (IOException e) {
+			return new FeatureCollection();
+		}
+        List<Geometry> geometries = response.body().getMatchedPoints().stream()
                                           .map(MatchedPoint::getPointOnRoad)
                                           .map(Feature::getGeometry)
                                           .collect(toList());

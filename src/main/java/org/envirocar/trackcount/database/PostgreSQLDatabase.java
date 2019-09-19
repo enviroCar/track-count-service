@@ -17,7 +17,6 @@ public class PostgreSQLDatabase {
 	
     private static final Logger LOG = LoggerFactory.getLogger(PostgreSQLDatabase.class);
 
-    private static PostgreSQLDatabase db;
     private static String connectionURL = null;	
     private static Connection conn = null;
 
@@ -206,7 +205,7 @@ public class PostgreSQLDatabase {
 			insertSQL.setInt(2, count);
 			int resultInt = insertSQL.executeUpdate();
 			conn.commit();
-			LOG.info("Result: " + resultInt);
+//			LOG.info("Result: " + resultInt);
 		} catch (SQLException e) {
 			LOG.error("Could not insert count for OSM ID: " + osmId, e);
 		}
@@ -223,7 +222,7 @@ public class PostgreSQLDatabase {
 			updateSQL.setLong(2, osmId);
 			int resultInt = updateSQL.executeUpdate();
 			conn.commit();
-			LOG.info("Result: " + resultInt);
+//			LOG.info("Result: " + resultInt);
 		} catch (SQLException e) {
 			LOG.error("Could not insert count for OSM ID: " + osmId, e);
 		}
